@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Text Reset
+RESET='\e[0m'
+BLINK='\e[5m'
+
+# Regular Colors
+BLACK='\e[0;30m'
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+YELLOW='\e[0;33m'
+BLUE='\e[0;34m'
+PURPLE='\e[0;35m'
+CYAN='\e[0;36m'
+WHITE='\e[0;37m'
+
+clear
+
+echo -e "${BLUE}_                _                    _             _               _${RESET}"
+echo -e "${BLUE}| |_   ___   ___ | |__   _ __   _   _ | | ___   ___ | |_   ___    __| |  __ _  _   _${RESET}"
+echo -e "${BLUE}| __| / _ \ / __|| '_ \ | '_ \ | | | || |/ __| / _ \| __| / _ \  / _' | / _' || | | |${RESET}"
+echo -e "${BLUE}| |_ |  __/| (__ | | | || |_) || |_| || |\__ \|  __/| |_ | (_) || (_| || (_| || |_| |${RESET}"
+echo -e "${BLUE}\__| \___| \___||_| |_|| .__/  \__,_||_||___/ \___| \__| \___/  \__,_| \__,_| \__, |${RESET}"
+echo -e "${BLUE}                       |_|                                                    |___/${RESET}"
+
+sudo apt update
+echo -e "${YELLOW}APT update finished...${RESET}"
+
+sudo apt full-upgrade -y
+echo -e "${YELLOW}APT distributive upgrade finished...${RESET}"
+
+sudo apt upgrade -y
+echo -e "${YELLOW}APT upgrade finished...${RESET}"
+
+sudo apt autoremove -y
+echo -e "${YELLOW}APT auto remove finished...${RESET}"
+
+sudo apt autoclean -y
+echo -e "${YELLOW}APT auto clean finished...${RESET}"
+
+sudo apt remove -y
+echo -e "${YELLOW}APT remove finished...${RESET}"
+
+sudo apt clean -y
+echo -e "${YELLOW}APT clean finished...${RESET}"
+
+if [ -f /var/run/reboot-required ]; then
+    echo -e "${RED}Reboot required!${RESET}"
+fi

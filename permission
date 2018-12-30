@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Text Reset
+RESET='\e[0m'
+BLINK='\e[5m'
+
+# Regular Colors
+BLACK='\e[0;30m'
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+YELLOW='\e[0;33m'
+BLUE='\e[0;34m'
+PURPLE='\e[0;35m'
+CYAN='\e[0;36m'
+WHITE='\e[0;37m'
+
+clear
+
+echo -e "${BLUE}_                _                    _             _               _${RESET}"
+echo -e "${BLUE}| |_   ___   ___ | |__   _ __   _   _ | | ___   ___ | |_   ___    __| |  __ _  _   _${RESET}"
+echo -e "${BLUE}| __| / _ \ / __|| '_ \ | '_ \ | | | || |/ __| / _ \| __| / _ \  / _' | / _' || | | |${RESET}"
+echo -e "${BLUE}| |_ |  __/| (__ | | | || |_) || |_| || |\__ \|  __/| |_ | (_) || (_| || (_| || |_| |${RESET}"
+echo -e "${BLUE}\__| \___| \___||_| |_|| .__/  \__,_||_||___/ \___| \__| \___/  \__,_| \__,_| \__, |${RESET}"
+echo -e "${BLUE}                       |_|                                                    |___/${RESET}"
+
+
+if [ "$1" != "" ]; then
+    sudo chown $USER:www-data -R $1
+    echo -e "${YELLOW}Change $1 directory owner to $USER:www-data${RESET}"
+
+    sudo find $1 -type d -exec chmod 755 {} \;
+    echo -e "${YELLOW}Change $1 directory permissions 755'${RESET}"
+
+    sudo find $1 -type f -exec chmod 644 {} \;
+    echo -e "${YELLOW}Change $1 file permissions 644${RESET}"
+else
+    sudo chown www-data:www-data -R *
+    echo -e "${YELLOW}Change current directory owner to www-data:www-data${RESET}"
+
+    sudo find . -type d -exec chmod 755 {} \;
+    echo -e "${YELLOW}Change current directory permissions 755${RESET}"
+
+    sudo find . -type f -exec chmod 644 {} \;
+    echo -e "${YELLOW}Change current file permissions 644${RESET}"
+fi

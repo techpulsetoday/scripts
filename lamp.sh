@@ -1,0 +1,362 @@
+#!/bin/bash
+
+# Text Reset
+RESET='\e[0m'
+BLINK='\e[5m'
+
+# Regular Colors
+BLACK='\e[0;30m'
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+YELLOW='\e[0;33m'
+BLUE='\e[0;34m'
+PURPLE='\e[0;35m'
+CYAN='\e[0;36m'
+WHITE='\e[0;37m'
+
+clear
+
+echo -e "${BLUE}_                _                    _             _               _${RESET}"
+echo -e "${BLUE}| |_   ___   ___ | |__   _ __   _   _ | | ___   ___ | |_   ___    __| |  __ _  _   _${RESET}"
+echo -e "${BLUE}| __| / _ \ / __|| '_ \ | '_ \ | | | || |/ __| / _ \| __| / _ \  / _' | / _' || | | |${RESET}"
+echo -e "${BLUE}| |_ |  __/| (__ | | | || |_) || |_| || |\__ \|  __/| |_ | (_) || (_| || (_| || |_| |${RESET}"
+echo -e "${BLUE}\__| \___| \___||_| |_|| .__/  \__,_||_||___/ \___| \__| \___/  \__,_| \__,_| \__, |${RESET}"
+echo -e "${BLUE}                       |_|                                                    |___/${RESET}"
+
+echo -e "${BLACK}=================================================================${RESET}"
+echo -e "${GREEN}Awesome LAMP Installer!!${RESET}"
+echo -e "${BLACK}=================================================================${RESET}"
+
+# Update the machine
+echo -e "${GREEN}Updating the system...${RESET}"
+sudo apt update
+sudo apt -y upgrade
+sudo apt -y dist-upgrade
+echo -e "${GREEN}Your system is up-to-date${RESET}"
+echo "================================================================="
+
+# Install Apache Web Server
+echo -e "${GREEN}Instaling Apache...${RESET}"
+sudo apt install -y apache2 apache2-utils
+echo -e "${GREEN}Apache Successfully Installed${RESET}"
+echo "================================================================="
+
+# Install MySQL Database Server
+echo -e "${GREEN}Instaling MySQL...${RESET}"
+sudo apt install -y mysql-server
+sudo apt install -y mysql-client
+echo -e "${GREEN}MySQL Successfully Installed${RESET}"
+echo "================================================================="
+
+# Install PHP7.2
+echo -e "${GREEN}Instaling PHP7...${RESET}"
+sudo apt install -y php7.2
+sudo apt install -y php7.2-mysql
+sudo apt install -y php7.2-curl
+sudo apt install -y php7.2-json
+sudo apt install -y php7.2-cgi
+sudo apt install -y php7.2-bz2
+sudo apt install -y php7.2-cli
+sudo apt install -y php7.2-common
+sudo apt install -y php7.2-gd
+sudo apt install -y php7.2-mbstring
+sudo apt install -y php7.2-xml
+sudo apt install -y php7.2-xmlrpc
+sudo apt install -y php7.2-zip
+sudo apt install -y php-curl
+sudo apt install -y php-json
+sudo apt install -y php-cgi
+sudo apt install -y libapache2-mod-php7.2
+sudo apt install -y unzip
+sudo apt install -y curl
+echo -e "${GREEN}PHP7 Package Successfully Installed${RESET}"
+echo "================================================================="
+
+# Update the machine
+echo -e "${GREEN}Updating the System...${RESET}"
+sudo apt update
+sudo apt -y upgrade
+sudo apt -y dist-upgrade
+echo -e "${GREEN}Your system is up-to-date${RESET}"
+echo "================================================================="
+
+# Reset the MySQL Password
+echo -e "${GREEN}Reseting the MySQL Passowrd...${RESET}"
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
+mysql -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root'; FLUSH privileges;"
+echo -e "${GREEN}MySQL Password Reseted.${RESET}"
+echo "================================================================="
+
+# Create a folder for PHP error log
+sudo mkdir /var/log/php
+sudo chown www-data /var/log/php
+
+# Enable Apache Module
+echo -e "${GREEN}Enabling Apache Module...${RESET}"
+sudo a2enmod deflate expires ext_filter filter headers php7.2 reflector rewrite session_cookie session include
+echo -e "${GREEN}Necessary Apache Module Enabled${RESET}"
+echo "================================================================="
+
+# Cleanup the System
+echo -e "${GREEN}Update & Cleanup the System...${RESET}"
+sudo apt update
+sudo apt -y upgrade
+sudo apt -y autoremove
+sudo apt -y autoclean
+sudo apt -y remove
+sudo apt -y clean
+echo -e "${GREEN}Done${RESET}"
+echo "================================================================="
+
+# Adjust the Firewall to Allow Web Traffic
+echo -e "${GREEN}Adjust the Firewall to Allow Web Traffic...${RESET}"
+sudo ufw enable
+sudo ufw allow in "Apache Full"
+echo -e "${GREEN}Firewall activated...${RESET}"
+echo "================================================================="
+
+# Install phpMyAdmin
+if [[ $(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok installed") -eq 0 ]]
+then
+    echo -e "${GREEN}Instaling phpMyAdmin...${RESET}"
+    sudo apt install -y phpmyadmin;
+	sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+	sudo a2enconf phpmyadmin
+    echo -e "${GREEN}Done${RESET}"
+else
+    echo -e "${GREEN}phpMyAdmin already Installed${RESET}"
+fi
+
+# Restart the Apache
+echo -e "${GREEN}Restarting Apache...${RESET}"
+sudo systemctl restart apache2.service
+echo -e "${GREEN}Done${RESET}"
+echo "================================================================="
+
+# Output success message
+echo -e "\nYour machine has been setup"
+echo "---------------------------------"
+echo -e "MySQL is available on port ${YELLOW}3609${RESET} with username '${YELLOW}root${RESET}' and password '${YELLOW}root${RESET}'"
+echo "         (you have to use 127.0.0.1 as opposed to 'localhost')"
+echo "Apache is available on port 80"
+echo -e "Head over to${BLUE}${BLINK} http://localhost${RESET} to get started"
+echo -e "${PURPLE}Choose your below options to install additional package${RESET}"
+
+# ----------------------------------
+# Step #1: User defined function
+# ----------------------------------
+pause(){
+  read -p "Press [Enter] key to continue..." fackEnterKey
+}
+
+# Install Google Chrome
+chrome(){
+    if [[ $(dpkg-query -W -f='${Status}' google-chrome-stable 2>/dev/null | grep -c "ok installed") -eq 0 ]]
+    then
+        echo -e "${GREEN}Installing Google Chrome...${RESET}"
+        rm -rf ~/Downloads/google-chrome-stable_current_amd64.deb
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/Downloads/
+        sudo dpkg -i ~/Downloads/google-chrome-stable_current_amd64.deb
+        sudo apt -f install
+        rm -rf ~/Downloads/google-chrome-stable_current_amd64.deb
+        echo -e "${GREEN}Done...${RESET}"
+        echo "================================================================="
+    else
+        echo -e "${GREEN}Google Chrome already Installed${RESET}"
+    fi
+}
+
+# Install ATOM Editor
+atom(){
+    if [[ $(dpkg-query -W -f='${Status}' atom 2>/dev/null | grep -c "ok installed") -eq 0 ]]
+    then
+        echo -e "${GREEN}Installing ATOM Editor...${RESET}"
+        curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
+        sudo apt update
+        sudo apt install -y atom
+        echo -e "${GREEN}Done...${RESET}"
+        echo "================================================================="
+    else
+        echo -e "${GREEN}ATOM already Installed${RESET}"
+    fi
+}
+
+# Install GIMP
+gimp(){
+    echo -e "${GREEN}Installing GIMP...${RESET}"
+    sudo apt install -y gimp
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install FileZilla
+filezilla(){
+    echo -e "${GREEN}Installing FileZilla...${RESET}"
+    sudo apt install -y filezilla
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install VLC Player
+vlc(){
+    echo -e "${GREEN}Installing VLC Player...${RESET}"
+    sudo apt install -y vlc
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+    # Install full multimedia support
+    echo -e "${GREEN}Installong full multimedia support...${RESET}"
+    sudo apt install -y ubuntu-restricted-extras
+    sudo apt install -y libavcodec-extra
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install VIM Editor
+vim(){
+    echo -e "${GREEN}Installing VIM Editor...${RESET}"
+    sudo apt install -y vim
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install YouTube Downloader
+youtube_dl(){
+    echo -e "${GREEN}Installing YouTube Downloader...${RESET}"
+    sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+    sudo chmod a+rx /usr/local/bin/youtube-dl
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install Composer
+install_composer(){
+    echo -e "${GREEN}Installing Composer...${RESET}"
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bash_profile
+    source ~/.bash_profile
+    composer --version
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install Drush
+drush(){
+    echo -e "${GREEN}Installing Drush...${RESET}"
+    sudo wget https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar -O /usr/local/bin/drush
+    chmod +x /usr/local/bin/drush
+    composer clearcache
+    composer global require drush/drush
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install WP-CLI
+wp_cli(){
+    echo -e "${GREEN}Installing WP-CLI...${RESET}"
+    sudo wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
+    sudo chmod +x /usr/local/bin/wp
+    wget --no-check-certificate --content-disposition https://github.com/wp-cli/wp-cli/raw/master/utils/wp-completion.bash -O ~/wp-completion.bash
+    echo 'source /home/$USER/wp-completion.bash' >> ~/.bashrc
+    source ~/.bashrc
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+
+# Install Clam AntiVirus
+clam() {
+    echo -e "${GREEN}Installing Clam AntiVirus...${RESET}"
+    sudo apt install -y clamav
+    sudo sed -i -e "s/^NotifyClamd/#NotifyClamd/g" /etc/clamav/freshclam.conf
+    sudo systemctl stop clamav-freshclam
+    sudo freshclam
+    sudo systemctl start clamav-freshclam
+    echo -e "${GREEN}Done...${RESET}"
+    echo -e "Run Scan: ${YELLOW}clamscan --infected --remove --recursive /home${RESET}"
+    echo "================================================================="
+
+}
+
+# Install GNOME Tweak Tool
+tweak_tool(){
+    echo -e "${GREEN}Installing Tweak Tool...${RESET}"
+    sudo apt install -y gnome-tweak-tool
+    sudo apt install -y dos2unix
+    sudo apt install -y apcalc
+    sudo apt install -y putty-tools
+    echo -e "${GREEN}Done...${RESET}"
+    echo "================================================================="
+}
+all(){
+    chrome
+    atom
+    gimp
+    filezilla
+    vlc
+    vim
+    youtube_dl
+    install_composer
+    drush
+    wp_cli
+    clam
+    tweak_tool
+}
+
+# function to display menus
+show_menus() {
+	# clear
+	echo "~~~~~~~~~~~~~~~~~~~~~"
+	echo -e ${GREEN}" MAIN MENU "${RESET}
+	echo "~~~~~~~~~~~~~~~~~~~~~"
+	echo -e ${CYAN}"1. Google Chrome"${RESET}
+    echo -e ${CYAN}"2. ATOM"${RESET}
+    echo -e ${CYAN}"3. GIMP"${RESET}
+    echo -e ${CYAN}"4. FileZilla"${RESET}
+    echo -e ${CYAN}"5. VLC"${RESET}
+    echo -e ${CYAN}"6. VIM"${RESET}
+    echo -e ${CYAN}"7. YouTube dl"${RESET}
+    echo -e ${CYAN}"8. Composer"${RESET}
+    echo -e ${CYAN}"9. Drush"${RESET}
+    echo -e ${CYAN}"10. WP CLI"${RESET}
+    echo -e ${CYAN}"11. Install Clam AntiVirus"${RESET}
+    echo -e ${CYAN}"12. Gnome Tweak Tool"${RESET}
+    echo -e ${CYAN}"13. Install all the above Packages"${RESET}
+	echo -e ${CYAN}"14. Exit"${RESET}
+}
+# Read input from the keyboard and take a action
+read_options(){
+	local choice
+	read -p "Enter choice [ 1 - 14] " choice
+	case $choice in
+		1) chrome ;;
+        2) atom ;;
+        3) gimp ;;
+        4) filezilla ;;
+        5) vlc ;;
+        6) vim ;;
+        7) youtube_dl ;;
+        8) install_composer ;;
+        9) drush ;;
+        10) wp_cli ;;
+        11) clam ;;
+        12) tweak_tool ;;
+        13) all ;;
+		14) exit 0;;
+		*) echo -e "${RED}Error...${RESET}" && sleep 2
+	esac
+}
+
+# ----------------------------------------------
+# Step #2: Trap CTRL+C, CTRL+Z and quit singles
+# ----------------------------------------------
+trap '' SIGINT SIGQUIT SIGTSTP
+
+# -----------------------------------
+# Step #3: Main logic - infinite loop
+# ------------------------------------
+while true
+do
+    show_menus
+	read_options
+done
