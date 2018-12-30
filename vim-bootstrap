@@ -16,12 +16,9 @@ WHITE='\e[0;37m'
 
 clear
 
-echo -e "${BLUE}_                _                    _             _               _${RESET}"
-echo -e "${BLUE}| |_   ___   ___ | |__   _ __   _   _ | | ___   ___ | |_   ___    __| |  __ _  _   _${RESET}"
-echo -e "${BLUE}| __| / _ \ / __|| '_ \ | '_ \ | | | || |/ __| / _ \| __| / _ \  / _' | / _' || | | |${RESET}"
-echo -e "${BLUE}| |_ |  __/| (__ | | | || |_) || |_| || |\__ \|  __/| |_ | (_) || (_| || (_| || |_| |${RESET}"
-echo -e "${BLUE}\__| \___| \___||_| |_|| .__/  \__,_||_||___/ \___| \__| \___/  \__,_| \__,_| \__, |${RESET}"
-echo -e "${BLUE}                       |_|                                                    |___/${RESET}"
+echo -e "${BLACK}=================================================================${RESET}"
+echo -e "${GREEN}                   VIM Boostrap Installer!!                      ${RESET}"
+echo -e "${BLACK}=================================================================${RESET}"
 
 echo -e "${GREEN}Insalling VIM Boostrap...${RESET}"
 curl 'http://vim-bootstrap.com/generate.vim' --data 'langs=ruby&langs=perl&langs=c&langs=javascript&langs=php&langs=html&langs=python&editor=vim' > ~/.vimrc
