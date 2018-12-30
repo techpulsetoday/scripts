@@ -120,8 +120,8 @@ if [[ $(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok instal
 then
     echo -e "${GREEN}Instaling phpMyAdmin...${RESET}"
     sudo apt install -y phpmyadmin;
-	sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
-	sudo a2enconf phpmyadmin
+    sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+    sudo a2enconf phpmyadmin
     echo -e "${GREEN}Done${RESET}"
 else
     echo -e "${GREEN}phpMyAdmin already Installed${RESET}"
@@ -305,11 +305,11 @@ all(){
 
 # function to display menus
 show_menus() {
-	# clear
-	echo "~~~~~~~~~~~~~~~~~~~~~"
-	echo -e ${GREEN}" MAIN MENU "${RESET}
-	echo "~~~~~~~~~~~~~~~~~~~~~"
-	echo -e ${CYAN}"1. Google Chrome"${RESET}
+    # clear
+    echo "~~~~~~~~~~~~~~~~~~~~~"
+    echo -e ${GREEN}" MAIN MENU "${RESET}
+    echo "~~~~~~~~~~~~~~~~~~~~~"
+    echo -e ${CYAN}"1. Google Chrome"${RESET}
     echo -e ${CYAN}"2. ATOM"${RESET}
     echo -e ${CYAN}"3. GIMP"${RESET}
     echo -e ${CYAN}"4. FileZilla"${RESET}
@@ -322,14 +322,14 @@ show_menus() {
     echo -e ${CYAN}"11. Install Clam AntiVirus"${RESET}
     echo -e ${CYAN}"12. Gnome Tweak Tool"${RESET}
     echo -e ${CYAN}"13. Install all the above Packages"${RESET}
-	echo -e ${CYAN}"14. Exit"${RESET}
+    echo -e ${CYAN}"14. Exit"${RESET}
 }
 # Read input from the keyboard and take a action
 read_options(){
-	local choice
-	read -p "Enter choice [ 1 - 14] " choice
-	case $choice in
-		1) chrome ;;
+    local choice
+    read -p "Enter choice [ 1 - 14] " choice
+    case $choice in
+        1) chrome ;;
         2) atom ;;
         3) gimp ;;
         4) filezilla ;;
@@ -342,9 +342,9 @@ read_options(){
         11) clam ;;
         12) tweak_tool ;;
         13) all ;;
-		14) exit 0;;
-		*) echo -e "${RED}Error...${RESET}" && sleep 2
-	esac
+        14) exit 0;;
+        *) echo -e "${RED}Error...${RESET}" && sleep 2
+    esac
 }
 
 # ----------------------------------------------
