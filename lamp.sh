@@ -358,5 +358,5 @@ trap '' SIGINT SIGQUIT SIGTSTP
 while true
 do
     show_menus
-	read_options
+    read_options
 done
