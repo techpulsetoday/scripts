@@ -4,7 +4,7 @@
 
 <details>
   <summary>lamp</summary>
-  <p>Install the Apache, PHP7.2, MySQL, PhpMyAdmin and Additional Packages</p>
+  <p>Install the Apache, PHP7.2, MySQL, PhpMyAdmin and Additional Packages.</p>
 
   ## Download the script
   ```shell
