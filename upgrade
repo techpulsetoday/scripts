@@ -15,9 +15,9 @@ CYAN='\e[0;36m'
 WHITE='\e[0;37m'
 
 clear
-echo -e "${BLACK}=================================================================${RESET}"
-echo -e "${GREEN}                       System Upgrade!!                          ${RESET}"
-echo -e "${BLACK}=================================================================${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
+echo -e "${GREEN}                       System Upgrade!!                         ${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
 
 sudo apt update
 echo -e "${YELLOW}APT update finished...${RESET}"

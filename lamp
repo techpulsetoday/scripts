@@ -15,9 +15,9 @@ CYAN='\e[0;36m'
 WHITE='\e[0;37m'
 
 clear
-echo -e "${BLACK}=================================================================${RESET}"
-echo -e "${GREEN}                  Awesome LAMP Installer!!                       ${RESET}"
-echo -e "${BLACK}=================================================================${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
+echo -e "${GREEN}                  Awesome LAMP Installer!!                      ${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
 
 # Update the machine
 echo -e "${GREEN}Updating the system...${RESET}"
@@ -41,7 +41,7 @@ echo -e "${GREEN}MySQL Successfully Installed${RESET}"
 echo "================================================================="
 
 # Install PHP7.2
-echo -e "${GREEN}Instaling PHP7...${RESET}"
+echo -e "${GREEN}Instaling PHP7.2...${RESET}"
 sudo apt install -y php7.2
 sudo apt install -y php7.2-mysql
 sudo apt install -y php7.2-curl
@@ -61,7 +61,7 @@ sudo apt install -y php-cgi
 sudo apt install -y libapache2-mod-php7.2
 sudo apt install -y unzip
 sudo apt install -y curl
-echo -e "${GREEN}PHP7 Package Successfully Installed${RESET}"
+echo -e "${GREEN}PHP7.2 Package Successfully Installed${RESET}"
 echo "================================================================="
 
 # Update the machine

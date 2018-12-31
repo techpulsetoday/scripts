@@ -15,9 +15,9 @@ CYAN='\e[0;36m'
 WHITE='\e[0;37m'
 
 clear
-echo -e "${BLACK}=================================================================${RESET}"
-echo -e "${GREEN}                   Directory Permissions!!                       ${RESET}"
-echo -e "${BLACK}=================================================================${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
+echo -e "${GREEN}                   Directory Permissions!!                      ${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
 
 if [ "$1" != "" ]; then
     sudo chown $USER:www-data -R $1

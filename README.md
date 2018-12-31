@@ -26,7 +26,7 @@ chmod a+x ~/lamp
 
 </details>
 <details>
-  <summary>virtualhost</summary>
+  <summary>permission</summary>
   <p></p>
 </details>
 <details>
@@ -34,10 +34,10 @@ chmod a+x ~/lamp
   <p></p>
 </details>
 <details>
-  <summary>permission</summary>
+  <summary>vim-bootstrap</summary>
   <p></p>
 </details>
 <details>
-  <summary>vim-bootstrap</summary>
+  <summary>virtualhost</summary>
   <p></p>
 </details>
