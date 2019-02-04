@@ -7,10 +7,10 @@
 # THE SCRIPT
 
 # Used to identify the document root directory.
-SOURCEPATH=/var/www/html/local
+SOURCEPATH=/var/www/html
 
 # Used to identify the Folder Name of the Site in the root directory.
-THESITE='local.codeigniter4.com'
+THESITE='wordpress'
 
 # Used to Exclude files or Directory in the site folder.
 EXCLUDEFOLDER='tests'
