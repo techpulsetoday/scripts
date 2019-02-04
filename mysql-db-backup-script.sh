@@ -77,6 +77,14 @@ NUMMONTHLYBACKUPS=2
 # BREAK THE FUNCTIONING OF THIS SCRIPT.
 #
 
+# Create a Backup Folder if not exists
+if [[ ! -e ${BACKUPFOLDER} ]]; then
+    mkdir -p ${BACKUPFOLDER}
+elif [[ ! -d ${BACKUPFOLDER} ]]; then
+    echo "${BACKUPFOLDER} already exists but is not a directory" 1>&2
+fi
+
+# Set the Date & Time
 TODATE=$(date +%d)
 TOMORROW=`date +%d -d "1 day"`
 TODAY=$(date +%a)
