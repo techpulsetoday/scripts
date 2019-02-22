@@ -103,14 +103,6 @@ sudo apt -y clean
 echo -e "${GREEN}Done${RESET}"
 echo "================================================================="
 
-# Adjust the Firewall to Allow Web Traffic
-echo -e "${GREEN}Adjust the Firewall to Allow Web Traffic...${RESET}"
-sudo ufw enable
-sudo ufw allow in "Apache Full"
-sudo ufw allow in 'OpenSSH'
-echo -e "${GREEN}Firewall activated...${RESET}"
-echo "================================================================="
-
 # Install phpMyAdmin
 if [[ $(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok installed") -eq 0 ]]
 then
@@ -286,7 +278,6 @@ postfix() {
     sudo apt-get update
     sudo apt-get install -y postfix
     sudo apt-get install -y mailutils
-    sudo ufw allow Postfix
     sudo systemctl restart postfix.service
     echo -e "${GREEN}Done...${RESET}"
     echo "================================================================="
