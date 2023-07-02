@@ -20,7 +20,7 @@ echo -e "${GREEN}                   VIM Boostrap Installer!!                    
 echo -e "${CYAN}=================================================================${RESET}"
 
 echo -e "${GREEN}Insalling VIM Boostrap...${RESET}"
-curl 'https://vim-bootstrap.com/generate.vim' --data 'langs=c&langs=html&langs=javascript&langs=perl&langs=php&langs=python&langs=ruby&editor=vim' > ~/.vimrc
+curl 'https://vim-bootstrap.com/generate.vim' --data 'langs=c&langs=html&langs=javascript&langs=perl&langs=php&langs=python&langs=ruby&editor=vim' >~/.vimrc
 vim +PlugInstall +qall
 
 sudo ln -s ~/.vim /root/.vim

@@ -38,17 +38,15 @@ sitesAvailabledomain=$sitesAvailable$domain.conf
 
 if [ "$(whoami)" != 'root' ]; then
     echo $"You have no permission to run $0 as non-root user. Use sudo"
-    exit 1;
+    exit 1
 fi
 
-if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
-then
+if [ "$action" != 'create' ] && [ "$action" != 'delete' ]; then
     echo $"You need to prompt for action (create or delete) -- Lower-case only"
-    exit 1;
+    exit 1
 fi
 
-while [ "$domain" == "" ]
-do
+while [ "$domain" == "" ]; do
     echo -e $"Please provide domain. e.g.dev,staging"
     read domain
 done
@@ -65,12 +63,11 @@ fi
 
 rootDir=$userDir$rootDir
 
-if [ "$action" == 'create' ]
-then
+if [ "$action" == 'create' ]; then
     ### check if domain already exists
     if [ -e $sitesAvailabledomain ]; then
         echo -e $"This domain already exists.\nPlease Try Another one"
-        exit;
+        exit
     fi
 
     ### check if directory exists or not
@@ -80,10 +77,9 @@ then
         ### give permission to root dir
         chmod 755 $rootDir
         ### write test file in the new domain dir
-        if ! echo "<?php echo phpinfo(); ?>" > $rootDir/index.php
-        then
+        if ! echo "<?php echo phpinfo(); ?>" >$rootDir/index.php; then
             echo $"ERROR: Not able to write in file $rootDir/index.php. Please check permissions"
-            exit;
+            exit
         else
             echo $"Added content to $rootDir/index.php"
         fi
@@ -107,28 +103,24 @@ then
 			ErrorLog /var/log/apache2/$domain-error.log
 			LogLevel error
 			CustomLog /var/log/apache2/$domain-access.log combined
-    </VirtualHost>" > $sitesAvailabledomain
-    then
+    </VirtualHost>" >$sitesAvailabledomain; then
         echo -e $"There is an ERROR creating $domain file"
-        exit;
+        exit
     else
         echo -e $"\nNew Virtual Host Created\n"
     fi
 
     ### Add domain in /etc/hosts
-    if ! echo "127.0.0.1	$domain" >> /etc/hosts
-    then
+    if ! echo "127.0.0.1	$domain" >>/etc/hosts; then
         echo $"ERROR: Not able to write in /etc/hosts"
-        exit;
+        exit
     else
         echo -e $"Host added to /etc/hosts file \n"
     fi
 
     ### Add domain in /mnt/c/Windows/System32/drivers/etc/hosts (Windows Subsytem for Linux)
-    if [ -e /mnt/c/Windows/System32/drivers/etc/hosts ]
-    then
-        if ! echo -e "\r127.0.0.1       $domain" >> /mnt/c/Windows/System32/drivers/etc/hosts
-        then
+    if [ -e /mnt/c/Windows/System32/drivers/etc/hosts ]; then
+        if ! echo -e "\r127.0.0.1       $domain" >>/mnt/c/Windows/System32/drivers/etc/hosts; then
             echo $"ERROR: Not able to write in /mnt/c/Windows/System32/drivers/etc/hosts (Hint: Try running Bash as administrator)"
         else
             echo -e $"Host added to /mnt/c/Windows/System32/drivers/etc/hosts file \n"
@@ -154,20 +146,19 @@ then
 
     ### show the finished message
     echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
-    exit;
+    exit
 else
     ### check whether domain already exists
     if ! [ -e $sitesAvailabledomain ]; then
         echo -e $"This domain does not exist.\nPlease try another one"
-        exit;
+        exit
     else
         ### Delete domain in /etc/hosts
         newhost=${domain//./\\.}
         sed -i "/$newhost/d" /etc/hosts
 
         ### Delete domain in /mnt/c/Windows/System32/drivers/etc/hosts (Windows Subsytem for Linux)
-        if [ -e /mnt/c/Windows/System32/drivers/etc/hosts ]
-        then
+        if [ -e /mnt/c/Windows/System32/drivers/etc/hosts ]; then
             newhost=${domain//./\\.}
             sed -i "/$newhost/d" /mnt/c/Windows/System32/drivers/etc/hosts
         fi
@@ -200,5 +191,5 @@ else
 
     ### show the finished message
     echo -e $"Complete!\nYou just removed Virtual Host $domain"
-    exit 0;
+    exit 0
 fi

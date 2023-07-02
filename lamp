@@ -104,10 +104,9 @@ echo -e "${GREEN}Done${RESET}"
 echo "================================================================="
 
 # Install phpMyAdmin
-if [[ $(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok installed") -eq 0 ]]
-then
+if [[ $(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
     echo -e "${GREEN}Instaling phpMyAdmin...${RESET}"
-    sudo apt install -y phpmyadmin;
+    sudo apt install -y phpmyadmin
     sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
     sudo a2enconf phpmyadmin
     echo -e "${GREEN}Done${RESET}"
@@ -133,14 +132,13 @@ echo -e "${PURPLE}Choose your below options to install additional package${RESET
 # ----------------------------------
 # Step #1: User defined function
 # ----------------------------------
-pause(){
-  read -p "Press [Enter] key to continue..." fackEnterKey
+pause() {
+    read -p "Press [Enter] key to continue..." fackEnterKey
 }
 
 # Install Google Chrome
-chrome(){
-    if [[ $(dpkg-query -W -f='${Status}' google-chrome-stable 2>/dev/null | grep -c "ok installed") -eq 0 ]]
-    then
+chrome() {
+    if [[ $(dpkg-query -W -f='${Status}' google-chrome-stable 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
         echo -e "${GREEN}Installing Google Chrome...${RESET}"
         rm -rf ~/Downloads/google-chrome-stable_current_amd64.deb
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/Downloads/
@@ -155,9 +153,8 @@ chrome(){
 }
 
 # Install ATOM Editor
-atom(){
-    if [[ $(dpkg-query -W -f='${Status}' atom 2>/dev/null | grep -c "ok installed") -eq 0 ]]
-    then
+atom() {
+    if [[ $(dpkg-query -W -f='${Status}' atom 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
         echo -e "${GREEN}Installing ATOM Editor...${RESET}"
         curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
         sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
@@ -178,7 +175,7 @@ atom(){
 }
 
 # Install GIMP
-gimp(){
+gimp() {
     echo -e "${GREEN}Installing GIMP...${RESET}"
     sudo apt install -y gimp
     echo -e "${GREEN}Done...${RESET}"
@@ -186,7 +183,7 @@ gimp(){
 }
 
 # Install FileZilla
-filezilla(){
+filezilla() {
     echo -e "${GREEN}Installing FileZilla...${RESET}"
     sudo apt install -y filezilla
     echo -e "${GREEN}Done...${RESET}"
@@ -194,7 +191,7 @@ filezilla(){
 }
 
 # Install VLC Player
-vlc(){
+vlc() {
     echo -e "${GREEN}Installing VLC Player...${RESET}"
     sudo apt install -y vlc
     echo -e "${GREEN}Done...${RESET}"
@@ -208,7 +205,7 @@ vlc(){
 }
 
 # Install VIM Editor
-vim(){
+vim() {
     echo -e "${GREEN}Installing VIM Editor...${RESET}"
     sudo apt install -y vim
     echo -e "${GREEN}Done...${RESET}"
@@ -216,7 +213,7 @@ vim(){
 }
 
 # Install YouTube Downloader
-youtube_dl(){
+youtube_dl() {
     echo -e "${GREEN}Installing YouTube Downloader...${RESET}"
     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
     sudo chmod a+rx /usr/local/bin/youtube-dl
@@ -225,11 +222,11 @@ youtube_dl(){
 }
 
 # Install Composer
-install_composer(){
+install_composer() {
     echo -e "${GREEN}Installing Composer...${RESET}"
     curl -sS https://getcomposer.org/installer | php
     sudo mv composer.phar /usr/local/bin/composer
-    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bash_profile
+    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >>~/.bash_profile
     source ~/.bash_profile
     composer --version
     echo -e "${GREEN}Done...${RESET}"
@@ -237,7 +234,7 @@ install_composer(){
 }
 
 # Install Drush
-drush(){
+drush() {
     echo -e "${GREEN}Installing Drush...${RESET}"
     sudo wget https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar -O /usr/local/bin/drush
     sudo chmod +x /usr/local/bin/drush
@@ -248,12 +245,12 @@ drush(){
 }
 
 # Install WP-CLI
-wp_cli(){
+wp_cli() {
     echo -e "${GREEN}Installing WP-CLI...${RESET}"
     sudo wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
     sudo chmod +x /usr/local/bin/wp
     wget --no-check-certificate --content-disposition https://github.com/wp-cli/wp-cli/raw/master/utils/wp-completion.bash -O ~/wp-completion.bash
-    echo 'source /home/$USER/wp-completion.bash' >> ~/.bashrc
+    echo 'source /home/$USER/wp-completion.bash' >>~/.bashrc
     source ~/.bashrc
     echo -e "${GREEN}Done...${RESET}"
     echo "================================================================="
@@ -284,7 +281,7 @@ postfix() {
 }
 
 # Install Additional Packages
-tweak_tool(){
+tweak_tool() {
     echo -e "${GREEN}Installing Additional Packages...${RESET}"
     sudo apt install -y gnome-tweak-tool
     sudo apt install -y dos2unix
@@ -299,7 +296,7 @@ tweak_tool(){
     echo -e "${GREEN}Done...${RESET}"
     echo "================================================================="
 }
-all(){
+all() {
     chrome
     atom
     gimp
@@ -338,26 +335,26 @@ show_menus() {
     echo -e ${CYAN}"15. Exit"${RESET}
 }
 # Read input from the keyboard and take a action
-read_options(){
+read_options() {
     local choice
     read -p "Enter choice [ 1 - 15] " choice
     case $choice in
-        1) chrome ;;
-        2) atom ;;
-        3) gimp ;;
-        4) filezilla ;;
-        5) vlc ;;
-        6) vim ;;
-        7) youtube_dl ;;
-        8) install_composer ;;
-        9) drush ;;
-        10) wp_cli ;;
-        11) clam ;;
-        12) postfix ;;
-        13) tweak_tool ;;
-        14) all ;;
-        15) exit 0;;
-        *) echo -e "${RED}Error...${RESET}" && sleep 2
+    1) chrome ;;
+    2) atom ;;
+    3) gimp ;;
+    4) filezilla ;;
+    5) vlc ;;
+    6) vim ;;
+    7) youtube_dl ;;
+    8) install_composer ;;
+    9) drush ;;
+    10) wp_cli ;;
+    11) clam ;;
+    12) postfix ;;
+    13) tweak_tool ;;
+    14) all ;;
+    15) exit 0 ;;
+    *) echo -e "${RED}Error...${RESET}" && sleep 2 ;;
     esac
 }
 
@@ -369,8 +366,7 @@ trap '' SIGINT SIGQUIT SIGTSTP
 # -----------------------------------
 # Step #3: Main logic - infinite loop
 # ------------------------------------
-while true
-do
+while true; do
     show_menus
     read_options
 done

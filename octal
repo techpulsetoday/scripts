@@ -1,0 +1,39 @@
+#!/bin/bash
+
+## Get dir name from command line args
+# if $1 not passed, fall back to current directory
+# _dir="${1:-.}"
+
+## get the current working dir
+_pwd="$(pwd)"
+
+# Text Reset
+RESET='\e[0m'
+BLINK='\e[5m'
+
+# Regular Colors
+BLACK='\e[0;30m'
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+YELLOW='\e[0;33m'
+BLUE='\e[0;34m'
+PURPLE='\e[0;35m'
+CYAN='\e[0;36m'
+WHITE='\e[0;37m'
+
+clear
+echo -e "${CYAN}=================================================================${RESET}"
+echo -e "${GREEN}                       Octal Permissions!!                      ${RESET}"
+echo -e "${CYAN}=================================================================${RESET}"
+
+if [ "$1" != "" ]; then
+    SAVEIFS=$IFS
+    IFS=$(echo -en "\n\b")
+    for name in $*; do
+        stat -c '%a %n' "${name}"
+    done
+    IFS=$SAVEIFS
+else
+    echo -e "${PURPLE}Working Directory: ${RESET}${BLINK}${RED}${_pwd}${RESET}"
+    stat -c '%a %n' ${_pwd}/*
+fi

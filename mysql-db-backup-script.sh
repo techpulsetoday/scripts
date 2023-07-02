@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: TechPulseToday
-# Publisher: https://www.techpulsetoday.com/
+# Publisher: https://techpulsetoday.com/
 
 #############BEGIN EDIT AREA######################
 # BELOW ARE SOME REQUIRED SETTINGS. CONFIGURE THEM PROPERLY BEFORE USING
@@ -86,49 +86,44 @@ fi
 
 # Set the Date & Time
 TODATE=$(date +%d)
-TOMORROW=`date +%d -d "1 day"`
+TOMORROW=$(date +%d -d "1 day")
 TODAY=$(date +%a)
 MONTH=$(date +%B)
 WEEK=$(date +%U)
 
-if [ $TODATE -gt $TOMORROW ] && [ "$MONTHLYBACKUP" == "Y" ]
-then
-    $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME  | gzip > $BACKUPFOLDER/$DBNAME'_'`date '+%d%m%Y'`'_'$MONTH.sql.gz
+if [ $TODATE -gt $TOMORROW ] && [ "$MONTHLYBACKUP" == "Y" ]; then
+    $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME | gzip >$BACKUPFOLDER/$DBNAME'_'$(date '+%d%m%Y')'_'$MONTH.sql.gz
 else
-    if [ "$TODAY" == "Sat" ] && [ "$WEEKLYBACKUP" == "Y" ]
-    then
-        $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME  | gzip > $BACKUPFOLDER/$DBNAME'_'`date '+%d%m%Y'`'_'Week$WEEK.sql.gz
+    if [ "$TODAY" == "Sat" ] && [ "$WEEKLYBACKUP" == "Y" ]; then
+        $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME | gzip >$BACKUPFOLDER/$DBNAME'_'$(date '+%d%m%Y')'_'Week$WEEK.sql.gz
     else
-        if [ "$DAILYBACKUP" == "Y" ]
-        then
-            $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME  | gzip > $BACKUPFOLDER/$DBNAME'_'`date '+%d%m%Y'`'_'$TODAY.sql.gz
+        if [ "$DAILYBACKUP" == "Y" ]; then
+            $BINFOLDER/mysqldump -h $DBHOSTNAME -u $DBUSERNAME -p$DBPASSWORD $DBNAME | gzip >$BACKUPFOLDER/$DBNAME'_'$(date '+%d%m%Y')'_'$TODAY.sql.gz
         fi
     fi
 fi
 
-
-if [ "$DELETEFILES" == "Y" ]
-then
-    NUMWEEKLY=$[$NUMWEEKLYBACKUPS*7]
-    NUMMONTHLY=$[$NUMMONTHLYBACKUPS*31]
-    find $BACKUPFOLDER/*Sun.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Mon.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Tue.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Wed.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Thu.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Fri.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Sat.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2> /dev/null
-    find $BACKUPFOLDER/*Week*.sql.gz -type f -mtime +$NUMWEEKLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*January.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*February.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*March.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*April.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*May.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*June.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*July.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*August.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*September.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*October.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*November.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
-    find $BACKUPFOLDER/*December.sql.gz -type f -mtime +$NUMMONTHLY -delete 2> /dev/null
+if [ "$DELETEFILES" == "Y" ]; then
+    NUMWEEKLY=$(($NUMWEEKLYBACKUPS * 7))
+    NUMMONTHLY=$(($NUMMONTHLYBACKUPS * 31))
+    find $BACKUPFOLDER/*Sun.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Mon.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Tue.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Wed.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Thu.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Fri.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Sat.sql.gz -type f -mtime +$NUMDAILYBACKUPS -delete 2>/dev/null
+    find $BACKUPFOLDER/*Week*.sql.gz -type f -mtime +$NUMWEEKLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*January.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*February.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*March.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*April.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*May.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*June.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*July.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*August.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*September.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*October.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*November.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
+    find $BACKUPFOLDER/*December.sql.gz -type f -mtime +$NUMMONTHLY -delete 2>/dev/null
 fi

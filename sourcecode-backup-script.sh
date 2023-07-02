@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: TechPulseToday
-# Publisher: https://www.techpulsetoday.com/
+# Publisher: https://techpulsetoday.com/
 
 #############BEGIN EDIT AREA######################
 # BELOW ARE SOME REQUIRED SETTINGS. CONFIGURE THEM PROPERLY BEFORE USING
@@ -73,52 +73,48 @@ fi
 
 # Set the Date & Time
 TODATE=$(date +%d)
-TOMORROW=`date +%d -d "1 day"`
+TOMORROW=$(date +%d -d "1 day")
 TODAY=$(date +%a)
 MONTH=$(date +%B)
 WEEK=$(date +%U)
 
 cd ${SOURCEPATH}/${THESITE}/
 
-if [ ${TODATE} -gt ${TOMORROW} ] && [ "${MONTHLYBACKUP}" == "Y" ]
-then
-    tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'`date '+%d%m%Y'`'_'${MONTH}.tar.gz ../${THESITE}/
+if [ ${TODATE} -gt ${TOMORROW} ] && [ "${MONTHLYBACKUP}" == "Y" ]; then
+    tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'$(date '+%d%m%Y')'_'${MONTH}.tar.gz ../${THESITE}/
 else
-    if [ "${TODAY}" == "Sat" ] && [ "${WEEKLYBACKUP}" == "Y" ]
-    then
-        tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'`date '+%d%m%Y'`'_'Week${WEEK}.tar.gz ../${THESITE}/
+    if [ "${TODAY}" == "Sat" ] && [ "${WEEKLYBACKUP}" == "Y" ]; then
+        tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'$(date '+%d%m%Y')'_'Week${WEEK}.tar.gz ../${THESITE}/
     else
-        if [ "${DAILYBACKUP}" == "Y" ]
-        then
-            tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'`date '+%d%m%Y'`'_'${TODAY}.tar.gz ../${THESITE}/
+        if [ "${DAILYBACKUP}" == "Y" ]; then
+            tar --exclude=${EXCLUDEFOLDER} -zcvf ${BACKUPFOLDER}/${THESITE}'_'$(date '+%d%m%Y')'_'${TODAY}.tar.gz ../${THESITE}/
         fi
     fi
 fi
 
 cd $BACKUPFOLDER
 
-if [ "${DELETEFILES}" == "Y" ]
-then
-    NUMWEEKLY=$[$NUMWEEKLYBACKUPS*7]
-    NUMMONTHLY=$[$NUMMONTHLYBACKUPS*31]
-    find ${BACKUPFOLDER}/*Sun.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Mon.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Tue.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Wed.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Thu.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Fri.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Sat.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*Week*.tar.gz -type f -mtime +${NUMWEEKLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*January.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*February.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*March.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*April.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*May.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*June.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*July.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*August.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*September.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*October.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*November.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
-    find ${BACKUPFOLDER}/*December.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2> /dev/null
+if [ "${DELETEFILES}" == "Y" ]; then
+    NUMWEEKLY=$(($NUMWEEKLYBACKUPS * 7))
+    NUMMONTHLY=$(($NUMMONTHLYBACKUPS * 31))
+    find ${BACKUPFOLDER}/*Sun.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Mon.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Tue.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Wed.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Thu.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Fri.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Sat.tar.gz -type f -mtime +${NUMDAILYBACKUPS} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*Week*.tar.gz -type f -mtime +${NUMWEEKLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*January.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*February.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*March.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*April.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*May.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*June.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*July.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*August.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*September.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*October.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*November.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
+    find ${BACKUPFOLDER}/*December.tar.gz -type f -mtime +${NUMMONTHLY} -delete 2>/dev/null
 fi
